@@ -26,7 +26,8 @@ public class Program {
             System.out.println("\nSearch by:");
             System.out.println("1. First Name");
             System.out.println("2. Last Name");
-            System.out.println("3. Exit");
+            System.out.println("3. Display Stats");
+            System.out.println("4. Exit");
             String choice = scanner.nextLine().trim();
 
 
@@ -41,7 +42,8 @@ public class Program {
                     String name = scanner.nextLine().trim();
                     displayMatches(searchByLast(people, name));
                 }
-                case "3" -> isDone = true;
+                case "3" -> displayStats(people);
+                case "4" -> isDone = true;
                 default -> System.out.println("Invalid input");
             }
         }
@@ -76,6 +78,41 @@ public class Program {
             }
         }
         return matches;
+    }
+
+    private static void displayStats(List<Person> people) {
+        System.out.println("\nStats");
+        System.out.println("The average age is: " + getAverageAge(people));
+        System.out.println("The oldest person is: " + getHighestAge(people));
+        System.out.println("The youngest person is: " + getLowestAge(people));
+    }
+
+    private static double getAverageAge(List<Person> people) {
+        int total = 0;
+        for (Person person : people) {
+            total += person.getAge();
+        }
+        return (double) total / people.size();
+    }
+
+    private static Person getHighestAge(List<Person> people) {
+        Person oldest = people.get(0);
+        for (Person person : people) {
+            if (person.getAge() > oldest.getAge()) {
+                oldest = person;
+            }
+        }
+        return oldest;
+    }
+
+    private static Person getLowestAge (List<Person> people) {
+        Person youngest = people.get(0);
+        for (Person person : people) {
+            if (person.getAge() < youngest.getAge()) {
+                youngest = person;
+            }
+        }
+        return youngest;
     }
 
 }
